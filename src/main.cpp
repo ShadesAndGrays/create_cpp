@@ -5,11 +5,32 @@
 #include <fstream>
 
 
-int main(){
+void display_help(){
+    std::cout << "Usage: " << std::endl;
+    std::cout << "\tcreate_cpp [project_name] " << std::endl;
+}
 
+int main(int argc,char ** argv){
     std::string projectName;
-    std::cout << "Projects Name: ";
-    std::cin >> projectName;
+
+    if (argc == 2){
+        projectName = argv[1];
+        if ( projectName.compare("-h") == 0 || projectName.compare("--help") == 0){
+            display_help();
+            return -2;
+        }
+        std::cout << "Projects Name: " << projectName;
+
+    }else if (argc == 1){
+        std::cout << "Projects Name: ";
+        std::cin >> projectName;
+
+    } else {
+        std::cout << "Invalid argument count";
+        display_help();
+        return -1;
+    }
+
 
     auto path = std::filesystem::current_path();
 
